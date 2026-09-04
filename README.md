@@ -39,7 +39,7 @@ wrangler pages deploy . --project-name foodinglab-sales
 | **Netlify** | 저장소 연결 → Publish directory `.` (netlify.toml이 자동 적용). 환경변수 `MAIL_PIN`, `MAIL_KEY` 등록. 끝. |
 | **Cloudflare Pages** | 위 배포 절차 참고 (`functions/api.js` 사용) |
 | **Vercel** | `api/index.js`에 `netlify/functions/api.mjs` 내용을 Vercel 함수 형식으로 옮김. 환경변수 동일 |
-| **GitHub Pages 등 정적 전용** | 서버 함수가 없어 `/api`가 죽는다. 메일 발송 불가. 조회만 쓰려면 `fl_app.js`의 `API_URL = "/api"`를 Apps Script URL(`functions/api.js`의 `UPSTREAM`)로 직접 바꾼다 |
+| **GitHub Pages 등 정적 전용** | 서버 함수가 없어 `/api`가 죽는다. 메일 발송 불가. 데이터 자체는 브라우저 localStorage에 있어 조회·입력은 정상 동작 |
 
 `/api` 뒤의 데이터·메일은 Google Apps Script(별도 배포)가 처리하므로 호스팅과 무관하게 그대로 쓴다.
 
