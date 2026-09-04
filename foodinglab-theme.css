@@ -1,0 +1,59 @@
+/* ══════════════════════════════════════════════════════════
+   FOODING LAB 팔레트 — design-system.css 뒤에 링크할 것
+   구조·여백·굴림은 디자인시스템 그대로, 색만 교체한다.
+   README 계약대로 --brand-rgb / --green-rgb 까지 같이 바꿔야
+   포커스링·호버 그림자가 옛 파란색으로 남지 않는다.
+   ══════════════════════════════════════════════════════════ */
+:root{
+  /* 브랜드 — 푸딩랩 그린 */
+  --brand:#1A7452;    --brand-d:#155B42;  --brand-h:#1c8059;
+  --brand-l:#3FA97C;  --brand-dd:#10percent; /* 아래에서 다시 정의 */
+  --brand-dd:#0F4632; --brand-ink:#0D3A2A;
+  --brand-soft:#EAF3EE; --brand-rgb:26,116,82;
+
+  /* 파랑 자리도 그린으로 (디자인시스템이 --blue 를 링크·정보색으로 씀) */
+  --blue:#1A7452; --blue-soft:#EAF3EE;
+
+  /* 상태색 */
+  --green:#219466; --green-d:#155B42; --green-soft:#E9F5EF; --green-rgb:33,148,102;
+  --red:#c8392b;   --red-soft:#FBEDEB;
+  --amber:#a8791a; --amber-soft:#FBF3E0;
+
+  /* 포인트 = 골드 (디자인시스템의 --purple 자리) */
+  --purple:#E8B23A;
+  --gold:#E8B23A; --gold-d:#a8791a; --gold-soft:#FBF3E0;
+
+  /* 바탕 — 아주 옅은 그린 기운만 */
+  --bg:#F4F6F5; --bg2:#FAFBFA; --bg3:#EDF1EF;
+  --card:#ffffff; --line:#E5EAE7; --line2:#D2DBD6;
+  --ink:#13201B; --sub:#42504A; --hint:#78847E;
+  --side:#FBFCFB; --side-sub:#42504A; --side-active:#E8EFEB; --hover:#EEF2F0;
+
+  /* 견적서 문서 포인트색 */
+  --doc-accent:#1A7452;
+
+  /* 그림자를 그린 기운으로 (검정 그림자는 회색빛이 돌아 탁해 보임) */
+  --shadow:0 1px 2px rgba(19,32,27,.04),0 6px 20px rgba(19,32,27,.05);
+  --shadow-lg:0 2px 4px rgba(19,32,27,.05),0 16px 40px rgba(19,32,27,.09);
+}
+
+/* 로고 뱃지 — 디자인시스템은 애플 그린 그라디언트라 그대로면 브랜드가 안 읽힘 */
+.brand .mark{
+  background:linear-gradient(135deg,#219466,#155B42)!important;
+  box-shadow:0 1px 3px rgba(26,116,82,.35)!important;
+  font-family:'Helvetica Neue',Arial,sans-serif;
+  font-size:11px!important; font-weight:700; letter-spacing:.06em;
+}
+/* 워드마크 조판 — 본사 사이트와 같은 자간 */
+.wm{font-family:'Helvetica Neue',Arial,sans-serif;font-size:14.5px;font-weight:700;letter-spacing:.14em}
+.wm i{font-style:normal;color:var(--brand)}
+
+/* 활성 메뉴 왼쪽 그린 바 */
+.nav a.active{position:relative}
+.nav a.active::before{
+  content:"";position:absolute;left:-14px;top:7px;bottom:7px;width:3px;
+  background:var(--brand);border-radius:0 3px 3px 0;
+}
+
+/* 골드 계열 pill (디자인시스템엔 없는 것만 추가) */
+.pill-gold{background:var(--gold-soft);color:var(--gold-d)}

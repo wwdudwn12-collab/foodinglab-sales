@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>견적 확인 · FOODING LAB</title>
+<meta name="robots" content="noindex">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--ink:#13201B;--sub:#42504A;--hint:#78847E;--brand:#1A7452;--brand-d:#155B42;
+        --brand-soft:#EAF3EE;--gold:#E8B23A;--gold-soft:#FBF3E0;--line:#e6ebe8;--line2:#d3ddd7;--red:#c8392b}
+  body{background:#f5f7f6;color:var(--ink);line-height:1.6;letter-spacing:-.012em;
+       font-family:-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif}
+  .top{background:var(--ink);color:#fff;padding:26px 20px 34px;text-align:center}
+  .wm{font-family:'Helvetica Neue',Arial,sans-serif;font-size:13px;font-weight:800;letter-spacing:.16em}
+  .wm i{font-style:normal;color:#219466}
+  .top h1{margin-top:14px;font-size:21px;font-weight:800;letter-spacing:-.03em}
+  .top p{margin-top:6px;font-size:13px;color:rgba(255,255,255,.7)}
+  .wrap{max-width:600px;margin:-18px auto 60px;padding:0 16px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;
+        box-shadow:0 1px 2px rgba(19,32,27,.04),0 8px 26px rgba(19,32,27,.07);margin-bottom:14px}
+  .spec{width:100%;border-collapse:collapse;margin-bottom:18px}
+  .spec td{padding:9px 10px;border-bottom:1px solid var(--line);font-size:13.5px}
+  .spec td.h{background:#f7f9f8;font-weight:700;width:112px;color:var(--sub)}
+  .big{background:var(--ink);color:#fff;border-radius:14px;padding:18px 20px;text-align:center;margin-bottom:18px}
+  .big .l{font-size:12px;color:rgba(255,255,255,.65)}
+  .big .v{font-size:27px;font-weight:800;letter-spacing:-.03em;margin-top:4px;
+          font-variant-numeric:tabular-nums}
+  .big .s{font-size:12.5px;color:rgba(255,255,255,.7);margin-top:5px}
+  table.tier{width:100%;border-collapse:collapse;font-size:13px}
+  table.tier th{background:#f7f9f8;color:var(--hint);font-size:11.5px;font-weight:700;
+                padding:8px;border-bottom:1px solid var(--line2)}
+  table.tier td{padding:9px 8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+  table.tier td.r{text-align:right} table.tier tr.on td{background:var(--brand-soft);font-weight:700}
+  h2{font-size:14.5px;font-weight:800;margin-bottom:10px}
+  .note{background:#f7f9f8;border-radius:12px;padding:13px 15px;font-size:12.5px;
+        color:var(--sub);white-space:pre-line;line-height:1.8}
+  .btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+  button{padding:15px;border:none;border-radius:999px;font-size:15px;font-weight:700;
+         font-family:inherit;cursor:pointer}
+  .ok{background:var(--brand);color:#fff} .ok:hover{background:#1c8059}
+  .hold{background:#fff;border:1px solid var(--line2);color:var(--sub)} .hold:hover{border-color:var(--hint)}
+  button:disabled{opacity:.5;cursor:default}
+  .f{margin-top:14px} .f label{display:block;font-size:12px;font-weight:700;color:var(--sub);margin-bottom:5px}
+  input,textarea{width:100%;padding:11px 13px;border:1px solid var(--line2);border-radius:11px;
+                 font-size:14px;font-family:inherit;color:var(--ink)}
+  textarea{min-height:80px;resize:vertical;line-height:1.7}
+  input:focus,textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(26,116,82,.15)}
+  .done{text-align:center;padding:14px 0}
+  .done .ic{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+            margin:0 auto 14px;font-size:25px}
+  .done.acc .ic{background:var(--brand-soft);color:var(--brand)}
+  .done.hld .ic{background:var(--gold-soft);color:#a8791a}
+  .done h3{font-size:18px;font-weight:800;letter-spacing:-.03em}
+  .done p{margin-top:8px;font-size:13.5px;color:var(--sub);line-height:1.8}
+  .foot{text-align:center;font-size:11.5px;color:var(--hint);line-height:1.9;margin-top:18px}
+  .msg{margin-top:12px;font-size:13px;text-align:center;color:var(--red);min-height:18px}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wm">FOODING LAB<i>.</i></div>
+  <h1>제조 견적 확인</h1>
+  <p>내용을 확인하시고 아래에서 회신해 주세요</p>
+</div>
+
+<div class="wrap" id="wrap">
+  <div class="card"><div style="text-align:center;color:var(--hint);padding:30px 0">불러오는 중…</div></div>
+</div>
+
+<script>
+var Q = null;
+var T = new URLSearchParams(location.search).get("t") || "";
+
+function fmt(v, d){ d = d || 0;
+  return Number(v || 0).toLocaleString("ko-KR", {minimumFractionDigits:d, maximumFractionDigits:d}); }
+function esc(s){ return String(s == null ? "" : s)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+async function load(){
+  if (!T) { fail("링크가 올바르지 않습니다"); return; }
+  try {
+    var r = await fetch("/api/quote?t=" + encodeURIComponent(T));
+    var j = await r.json();
+    if (!j.ok) { fail(j.error); return; }
+    Q = j.quote;
+    render();
+  } catch(e){ fail("불러오지 못했습니다 — 잠시 후 다시 시도해 주세요"); }
+}
+function fail(msg){
+  document.getElementById("wrap").innerHTML =
+    '<div class="card"><div class="done hld"><div class="ic">!</div><h3>' + esc(msg) + '</h3>'
+    + '<p>담당자에게 문의해 주세요 · 031-354-6110</p></div></div>';
+}
+
+function render(){
+  /* 이미 회신한 건이면 결과만 */
+  if (Q.status === "accepted" || Q.status === "hold") { showDone(Q.status, true); return; }
+
+  var tiers = (Q.tiers || []).map(function(t){
+    var on = Number(t.qty) === Number(Q.order);
+    return '<tr' + (on ? ' class="on"' : "") + '><td>' + fmt(t.qty) + ' set' + (on ? " ◀" : "") + '</td>'
+      + '<td class="r">' + fmt(t.price) + ' 원</td>'
+      + '<td class="r">' + fmt(t.qty * t.price) + ' 원</td></tr>';
+  }).join("");
+
+  document.getElementById("wrap").innerHTML =
+    '<div class="card">'
+    + '<table class="spec">'
+    + '<tr><td class="h">고객사</td><td>' + esc(Q.client || "―") + '</td></tr>'
+    + '<tr><td class="h">품목</td><td><b>' + esc(Q.item || "―") + '</b></td></tr>'
+    + '<tr><td class="h">발주수량</td><td>' + fmt(Q.order) + ' set</td></tr>'
+    + (Q.unit ? '<tr><td class="h">포장단위</td><td>' + fmt(Q.unit) + ' 개입</td></tr>' : "")
+    + (Q.validUntil ? '<tr><td class="h">유효기한</td><td>' + esc(Q.validUntil) + '</td></tr>' : "")
+    + '</table>'
+
+    + '<div class="big"><div class="l">공급단가 · 1 set · VAT 별도</div>'
+    + '<div class="v">' + fmt(Q.final) + ' 원</div>'
+    + '<div class="s">총 ' + fmt(Q.amount) + ' 원'
+    + (Q.perUnit ? ' · 개당 ' + fmt(Q.perUnit, 1) + ' 원' : "") + '</div></div>'
+
+    + (tiers ? '<h2>수량별 공급단가</h2><table class="tier">'
+        + '<tr><th style="text-align:left">발주수량</th><th style="text-align:right">공급단가</th>'
+        + '<th style="text-align:right">총 금액</th></tr>' + tiers + '</table>' : "")
+
+    + (Q.note ? '<h2 style="margin-top:18px">안내</h2><div class="note">' + esc(Q.note) + '</div>' : "")
+    + '</div>'
+
+    + '<div class="card">'
+    + '<h2>회신</h2>'
+    + '<div class="f"><label>성함 / 직책</label><input id="nm" placeholder="예) 김도현 대표"></div>'
+    + '<div class="f"><label>남기실 말씀 (선택)</label>'
+    + '<textarea id="mm" placeholder="수량 조정, 일정 문의 등 편하게 적어주세요"></textarea></div>'
+    + '<div class="btns">'
+    + '<button class="ok" onclick="reply(\'accept\')">이 견적으로 진행</button>'
+    + '<button class="hold" onclick="reply(\'hold\')">보류 · 문의</button>'
+    + '</div><div class="msg" id="msg"></div></div>'
+
+    + '<div class="foot">주식회사 서래바이오 · FOODING LAB<br>'
+    + '경기도 화성시 정남면 신백길 102-14 · 031-354-6110</div>';
+}
+
+async function reply(action){
+  var btns = document.querySelectorAll("button");
+  btns.forEach(function(b){ b.disabled = true; });
+  document.getElementById("msg").textContent = "";
+  try {
+    var r = await fetch("/api/quote", {
+      method: "PUT", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ t: T, action: action,
+        name: (document.getElementById("nm") || {}).value || "",
+        memo: (document.getElementById("mm") || {}).value || "" })
+    });
+    var j = await r.json();
+    if (!j.ok) throw new Error(j.error || "처리 실패");
+    showDone(j.status, false);
+  } catch(e){
+    document.getElementById("msg").textContent = e.message + " — 다시 시도해 주세요";
+    btns.forEach(function(b){ b.disabled = false; });
+  }
+}
+
+function showDone(status, already){
+  var acc = status === "accepted";
+  document.getElementById("wrap").innerHTML =
+    '<div class="card"><div class="done ' + (acc ? "acc" : "hld") + '">'
+    + '<div class="ic">' + (acc ? "✓" : "…") + '</div>'
+    + '<h3>' + (acc ? "견적 진행으로 접수되었습니다" : "보류 · 문의로 접수되었습니다") + '</h3>'
+    + '<p>' + (already ? "이미 회신하신 건입니다.<br>" : "")
+    + (acc ? "담당자가 확인 후 생산 일정과 서류 절차를 안내드립니다."
+           : "담당자가 확인 후 연락드리겠습니다.")
+    + '<br>급하시면 031-354-6110 으로 전화 주세요.</p></div></div>'
+    + '<div class="foot">주식회사 서래바이오 · FOODING LAB</div>';
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+load();
+</script>
+</body>
+</html>

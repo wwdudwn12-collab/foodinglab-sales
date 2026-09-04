@@ -1,0 +1,192 @@
+/* ══════════════════════════════════════════════════════════
+   푸딩랩 관리앱 전용 컴포넌트만.
+   design-system.css 에 이미 있는 것(.card .card-h .metric .btn .pill
+   .statgrid .empty .toast .qd2 …)은 절대 다시 정의하지 않는다.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 표 정렬 규칙 ─────────────────────────────────────────── */
+.tblwrap{overflow-x:auto}
+.content table th.l,.content table td.l{text-align:left}
+.content table th.c,.content table td.c{text-align:center}
+.content table th.r,.content table td.r{text-align:right}
+.content table td.r .btn+.btn{margin-left:5px}
+
+/* ── 7단계 진행 ───────────────────────────────────────────── */
+.steps{display:flex;gap:6px;flex-wrap:wrap}
+.steps .st{
+  flex:1;min-width:80px;text-align:center;padding:10px 4px;border-radius:12px;
+  background:var(--bg3);color:var(--hint);font-size:12px;font-weight:600;
+  cursor:pointer;transition:background .15s,color .15s;
+}
+.steps .st:hover{background:var(--hover)}
+.steps .st.done{background:var(--brand-soft);color:var(--brand-d)}
+.steps .st.on{background:var(--brand);color:#fff;box-shadow:0 2px 8px rgba(var(--brand-rgb),.28)}
+
+/* ── 진행 바 ──────────────────────────────────────────────── */
+.bar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brand);border-radius:99px;transition:width .3s}
+.bar i.gold{background:var(--gold)}
+
+/* ── 파이프라인 칸반 ──────────────────────────────────────── */
+.kan{display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));gap:12px;
+  overflow-x:auto;padding-bottom:8px}
+.kan .col{background:var(--bg3);border-radius:var(--r-sm);padding:12px;min-height:120px}
+.kan .col h4{font-size:12px;font-weight:700;color:var(--sub);margin-bottom:10px;display:flex}
+.kan .col h4 em{font-style:normal;margin-left:auto;color:var(--hint);font-weight:600}
+.kan .it{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:11px 12px;margin-bottom:8px;font-size:13px;cursor:pointer;
+  box-shadow:var(--shadow);transition:transform .18s,border-color .18s}
+.kan .it:hover{border-color:var(--brand);transform:translateY(-1px)}
+.kan .it b{display:block;margin-bottom:2px}
+.kan .it span{color:var(--hint);font-size:12px}
+@media(max-width:900px){.kan{grid-template-columns:repeat(3,minmax(150px,1fr))}}
+
+/* ── 캘린더 ───────────────────────────────────────────────── */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal .dh{font-size:11.5px;font-weight:700;color:var(--hint);text-align:center;padding:5px 0}
+.cal .d{min-height:88px;border:1px solid var(--line);border-radius:12px;
+  padding:8px 9px;background:var(--card)}
+.cal .d.out{background:var(--bg2);color:var(--hint)}
+.cal .d.today{border-color:var(--brand);box-shadow:0 0 0 2px rgba(var(--brand-rgb),.16)}
+.cal .d .n{font-size:12px;font-weight:700;color:var(--sub)}
+.cal .ev{font-size:11px;background:var(--brand-soft);color:var(--brand-d);border-radius:6px;
+  padding:2px 6px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cal .ev.gold{background:var(--gold-soft);color:var(--gold-d)}
+
+/* ── 안내 박스 ────────────────────────────────────────────── */
+.notice{background:var(--brand-soft);border:1px solid #cfe3d8;border-radius:var(--r-sm);
+  padding:15px 17px;margin-bottom:18px;font-size:13px;color:var(--brand-d);line-height:1.8}
+.notice .sub2{color:var(--sub);font-size:12.5px}
+
+/* ── 폼 (모달·기준정보 공용) ──────────────────────────────── */
+.field{margin-bottom:13px}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--sub);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;
+  border:1px solid var(--line2);border-radius:11px;font-size:13.5px;
+  font-family:inherit;color:var(--ink);background:#fff}
+.field textarea{min-height:78px;line-height:1.7;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;
+  border-color:var(--brand);box-shadow:0 0 0 3px rgba(var(--brand-rgb),.18)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1}
+
+/* ── 견적 입력 표 ─────────────────────────────────────────── */
+.qform table{table-layout:fixed;width:100%;border:1px solid var(--line);
+  border-radius:var(--r-sm);border-collapse:separate;border-spacing:0;overflow:hidden}
+.qform thead th{background:var(--bg2);border-bottom:1px solid var(--line2);
+  font-size:12px;padding:9px 8px;white-space:nowrap;text-align:center;color:var(--hint)}
+.qform th:first-child,.qform th.l{text-align:left;padding-left:11px}
+.qform th.r{text-align:right} .qform th.c{text-align:center}
+.qform td{padding:5px 6px;vertical-align:middle;text-align:center;
+  border-bottom:1px solid var(--line);font-size:13px}
+.qform tbody tr:last-child td{border-bottom:none}
+.qform td:first-child,.qform td.l{text-align:left;padding-left:11px}
+.qform td input{width:104px;max-width:100%;padding:7px 10px;font-size:13px;
+  border:1px solid var(--line2);border-radius:9px;background:#fff;color:var(--ink)}
+.qform td:first-child input,.qform td.l input,.qform td.wide input{width:100%;text-align:left}
+.qform td input.num{text-align:center;font-variant-numeric:tabular-nums}
+.qform td input:focus{outline:none;border-color:var(--brand);
+  box-shadow:0 0 0 3px rgba(var(--brand-rgb),.16)}
+.qform td input::placeholder{color:#b9c2bd}
+/* 자동 계산 칸 — 입력칸과 확실히 구분 */
+.qform td.calc{background:var(--bg2);color:var(--sub);text-align:right;
+  font-variant-numeric:tabular-nums}
+.qform tbody tr:hover td.calc{background:var(--bg3)}
+.qform td.calc.zero{color:var(--line2)}
+/* 삭제 */
+.qform td.del{text-align:center;padding:4px 2px}
+.qform td.del .btn{padding:5px 11px;background:var(--red-soft);border-color:transparent;
+  color:var(--red);font-weight:700}
+.qform td.del .btn:hover{background:#f7ddd9;color:var(--red)}
+/* 합계 행 */
+.qform tr.tot td{background:var(--bg3);font-weight:700}
+.qform tr.tot td.calc{background:var(--bg3);color:var(--ink);font-weight:700}
+.qform tr.cost td{background:var(--brand-soft);font-weight:700}
+.qform tr.grand td{background:var(--ink);color:#fff;font-weight:700}
+/* 섹션 제목 */
+.qform .sec{display:flex;align-items:baseline;gap:9px;margin:24px 0 9px}
+.qform .sec b{font-size:15px;font-weight:700;letter-spacing:-.02em}
+.qform .hint{font-size:12.5px;color:var(--hint)}
+.qform>input,.qform>select{padding:10px 12px;font-size:13.5px;border-radius:11px;
+  border:1px solid var(--line2);width:100%}
+.qform>input.num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* ── 모달 ─────────────────────────────────────────────────── */
+.modal{position:fixed;inset:0;background:rgba(19,32,27,.42);z-index:100;display:flex;
+  align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto}
+.modal .box{background:var(--card);border-radius:var(--r);max-width:1000px;width:100%;
+  padding:26px;box-shadow:var(--shadow-lg)}
+.modal .box.wide{max-width:1180px}
+.mhead{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.mhead h3{font-size:18px;font-weight:700;letter-spacing:-.02em}
+
+/* ── 메일 첨부 ────────────────────────────────────────────── */
+.att{display:flex;align-items:center;gap:9px;border:1px solid var(--line);
+  border-radius:11px;padding:9px 12px;margin-bottom:7px;font-size:12.5px}
+.att .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.att .sz{color:var(--hint);font-size:11.5px}
+
+/* ── 견적서 문서 — 디자인시스템 .qd2 를 그대로 쓰고, 없는 것만 보탬 ── */
+#qv{margin:0 auto;padding:10mm;width:210mm;font-size:10.5px;line-height:1.35;zoom:var(--zoom,1)}
+#qvwrap{overflow:auto;display:flex;justify-content:center}
+#qv h1.title{font-size:23px;letter-spacing:.24em;text-indent:.24em}
+/* 머리 — 가운데 타이틀, 오른쪽 작성일 (좌우 균형 맞추려고 빈 칸 하나 둠) */
+#qv .qhead{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;margin-bottom:12px}
+#qv .qhead .titlewrap{text-align:center}
+#qv .qdate{justify-self:end;font-size:10.5px;color:var(--g700);white-space:nowrap}
+/* 워드마크 — 실제 로고대로 검정 볼드 + 마침표만 그린 */
+#qv .qwm{justify-self:start;font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;
+  font-weight:800;letter-spacing:.01em;color:#13201B;white-space:nowrap}
+#qv .qwm i{font-style:normal;color:var(--sg)}
+#qv .supline{flex:1;text-align:center;font-size:9.5px;color:var(--g500)}
+#qv .sup td{padding:3px 6px;font-size:10px;line-height:1.35}
+#qv .total-band{margin-bottom:10px}
+#qv .total-band td{padding:5px 9px}
+#qv .total-band .val{font-size:13px}
+#qv .items td{padding:2px 5px;font-size:10px;height:17px}
+#qv .items th{padding:4px 3px;font-size:10px;line-height:1.3}
+#qv .items th small{display:block;font-size:9px;font-weight:400;color:var(--g500)}
+#qv .items tr.sum td{font-size:10.5px;padding:5px 6px}
+#qv .items tr.on td,#qv .items tr.cost td{background:var(--brand-soft);font-weight:700}
+#qv .items tr.grand td{background:var(--g900);color:#fff;font-weight:800}
+/* 제품 사양표 — 디자인시스템엔 없는 블록 */
+#qv .spec{width:100%;border-collapse:collapse;border:1px solid var(--g900);
+  table-layout:fixed;margin-bottom:10px}
+#qv .spec td{border:1px solid var(--g300);padding:2px 6px;font-size:10px;height:18px}
+#qv .spec .h{background:var(--g100);font-weight:700;text-align:center;white-space:nowrap}
+#qv .blk{margin-bottom:8px}
+#qv .cap{font-size:10px;font-weight:700;color:var(--g500);margin:0 0 3px 3px}
+#qv .cols2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+#qv .cols2 .items td{padding:2px 4px;height:16px;font-size:9.5px}
+#qv .cols2 .items th{padding:3px;font-size:9px}
+#qv .foot2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#qv .note{padding:6px 9px}
+#qv .note .b{font-size:10px;line-height:1.6}
+#qv .docfoot{margin-top:10px}
+#qv .wmk{font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.16em;color:var(--sg)}
+
+/* ── 인쇄 ─────────────────────────────────────────────────── */
+@media print{
+  body{background:#fff}
+  .sidebar,.topbar,.noprint{display:none!important}
+  .modal{position:static;background:none;padding:0;display:block;overflow:visible}
+  .modal .box{max-width:none;box-shadow:none;padding:0;border-radius:0}
+  #qv{width:auto!important;padding:0!important;margin:0!important;zoom:var(--fit,1)!important}
+  #qv .items thead{display:table-header-group}
+  @page{size:A4;margin:10mm}
+}
+
+
+/* ── 대시보드 클릭 연동 ───────────────────────────────────── */
+.metric.clickable{cursor:pointer}
+.metric.clickable:hover{border-color:var(--brand)}
+.stagebox{background:var(--bg3);border:1px solid transparent;border-radius:12px;
+  padding:13px 6px;text-align:center;cursor:pointer;transition:.15s}
+.stagebox .k{font-size:11.5px;font-weight:600;color:var(--sub)}
+.stagebox .v{font-size:21px;font-weight:700;margin-top:2px;letter-spacing:-.03em;color:var(--hint)}
+.stagebox.has{background:var(--brand-soft)}
+.stagebox.has .v{color:var(--brand-d)}
+.stagebox:hover{border-color:var(--brand);transform:translateY(-1px)}
+.content table tr.clickrow{cursor:pointer}
+.content table tr.clickrow:hover{background:var(--brand-soft)}

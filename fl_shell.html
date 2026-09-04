@@ -1,0 +1,30 @@
+<body>
+
+<div style="display:flex;min-height:100vh">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="mark">FL</div>
+      <div><b class="wm">FOODING LAB<i>.</i></b><small>제조컨설팅 관리</small></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">주식회사 서래바이오<br>031-354-6110 · 초안 v0.4</div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+      <div class="ttl" id="ttl">대시보드</div>
+      <div class="right">
+        <span id="tdesc"></span>
+        <button class="btn btn-ghost btn-sm noprint" onclick="resetSeed()">샘플 초기화</button>
+      </div>
+    </div>
+    <div class="content" id="page"></div>
+  </div>
+</div>
+
+<div id="modal"></div>
+<div id="modal2"></div>
+<div id="toast" style="position:fixed;left:50%;bottom:26px;transform:translateX(-50%);
+  background:rgba(19,32,27,.92);color:#fff;padding:11px 18px;border-radius:12px;font-size:13.5px;
+  z-index:200;opacity:0;pointer-events:none;transition:opacity .2s"></div>
